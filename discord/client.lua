@@ -37,7 +37,7 @@ client.ClientObject = class('ClientObject')
 
 function client.ClientObject:initialize(options)
 
-	self._isLoggedIn = false
+	self.isLoggedIn = false
 	self.options = options
 	self.token = ''
 
@@ -62,7 +62,7 @@ function client.ClientObject:login(email, password)
 	if utils.responseIsSuccessful(response) then
 
 		self.token = json.decode(response.body).token
-		self._isLoggedIn = true
+		self.isLoggedIn = true
 		self.headers.authorization = self.token
 
 		return true
@@ -75,20 +75,26 @@ end
 
 function client.ClientObject:logout()
 
-	local payload = {
-		token = self.token
-	}
+	if self.isLoggedIn then
 
-	local response = request.send(endpoints.logout, {
-		method = 'POST',
-		data = payload
-	})
+		local payload = {
+			token = self.token
+		}
 
-	if utils.responseIsSuccessful(response) then
+		local response = request.send(endpoints.logout, {
+			method = 'POST',
+			data = payload
+		})
 
-		self._isLoggedIn = false
+		if utils.responseIsSuccessful(response) then
 
-		return true
+			self.isLoggedIn = false
+
+			return true
+
+		else
+			return false
+		end
 
 	else
 		return false
