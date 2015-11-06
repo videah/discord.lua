@@ -21,79 +21,17 @@
 -- THE SOFTWARE.
 
 local path = (...):match('(.-)[^%.]+$') .. '.'
+local request = require(path .. 'luajit-request.init')
 
-local request = require(path .. 'wrapper')
+local requestWrapper = {}
 
-local class = require(path .. 'class')
-local json = require(path .. 'json')
-local endpoints = require(path .. 'endpoints')
-local utils = require(path .. 'utils')
+function requestWrapper.send(endpoint, method, data)
 
-local client = {}
-
-print('Loaded client')
-
-client.ClientObject = class('ClientObject')
-
-function client.ClientObject:initialize(options)
-
-	self.isLoggedIn = false
-	self.options = options
-	self.token = ''
-
-	self.headers = {
-		authorization = self.token
-	}
+	return request.send(endpoint, {
+		method = method,
+		data = data
+	})
 
 end
 
-function client.ClientObject:login(email, password)
-
-	local payload = {
-		email = email,
-		password = password
-	}
-
-	local response = request.send(endpoints.login, 'POST', payload)
-
-	if utils.responseIsSuccessful(response) then
-
-		self.token = json.decode(response.body).token
-		self.isLoggedIn = true
-		self.headers.authorization = self.token
-
-		return true
-
-	else
-		return false
-	end
-
-end
-
-function client.ClientObject:logout()
-
-	if self.isLoggedIn then
-
-		local payload = {
-			token = self.token
-		}
-
-		local response = request.send(endpoints.login, 'POST', payload)
-
-		if utils.responseIsSuccessful(response) then
-
-			self.isLoggedIn = false
-
-			return true
-
-		else
-			return false
-		end
-
-	else
-		return false
-	end
-
-end
-
-return client
+return requestWrapper
