@@ -30,6 +30,6 @@ local discord = {
 }
 
 discord.auth = require(path .. 'auth')
-discord.client = require(path .. 'client')
+discord.Client = require(path .. 'client')
 
 return discord

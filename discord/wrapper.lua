@@ -25,9 +25,10 @@ local request = require(path .. 'luajit-request.init')
 
 local requestWrapper = {}
 
-function requestWrapper.send(endpoint, method, data)
+function requestWrapper.send(endpoint, method, data, headers)
 
 	return request.send(endpoint, {
+		headers = headers,
 		method = method,
 		data = data
 	})

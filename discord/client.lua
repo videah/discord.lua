@@ -29,17 +29,16 @@ local json = require(path .. 'json')
 local endpoints = require(path .. 'endpoints')
 local utils = require(path .. 'utils')
 
-local client = {}
-
 print('Loaded client')
 
-client.ClientObject = class('ClientObject')
+local Client = class('ClientObject')
 
-function client.ClientObject:initialize(options)
+function Client:initialize(options)
 
 	self.isLoggedIn = false
 	self.options = options
 	self.token = ''
+	self.email = ''
 
 	self.headers = {
 		authorization = self.token
@@ -47,7 +46,7 @@ function client.ClientObject:initialize(options)
 
 end
 
-function client.ClientObject:login(email, password)
+function Client:login(email, password)
 
 	local payload = {
 		email = email,
@@ -61,6 +60,7 @@ function client.ClientObject:login(email, password)
 		self.token = json.decode(response.body).token
 		self.isLoggedIn = true
 		self.headers.authorization = self.token
+		self.email = email
 
 		return true
 
@@ -70,7 +70,7 @@ function client.ClientObject:login(email, password)
 
 end
 
-function client.ClientObject:logout()
+function Client:logout()
 
 	if self.isLoggedIn then
 
@@ -96,4 +96,16 @@ function client.ClientObject:logout()
 
 end
 
-return client
+function Client:getGateway()
+
+	local response = request.send(endpoints.gateway, 'GET', nil, self.headers)
+
+	if utils.responseIsSuccessful(response) then
+		return json.decode(response.body).url
+	else
+		return nil
+	end
+
+end
+
+return Client
