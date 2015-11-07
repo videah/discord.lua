@@ -20,7 +20,7 @@ if myClient:login('email', 'password') then
 	local serverList = myClient:getServerList()
 	print('First Server Name: ' .. serverList[1].name)
 
-	-- Server Name: Y[e]
+	-- First Server Name: Y[e]
 
 	local channelList = myClient:getChannelList(serverList[1].id)
 	print('First Channel Name: ' .. channelList[1].name)
