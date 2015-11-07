@@ -29,7 +29,6 @@ local discord = {
 
 }
 
-discord.auth = require(path .. 'auth')
 discord.Client = require(path .. 'client')
 
 return discord

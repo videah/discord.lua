@@ -27,7 +27,7 @@ local request = require(path .. 'wrapper')
 local class = require(path .. 'class')
 local json = require(path .. 'json')
 local endpoints = require(path .. 'endpoints')
-local utils = require(path .. 'utils')
+local util = require(path .. 'utils')
 
 print('Loaded client')
 
@@ -39,10 +39,12 @@ function Client:initialize(options)
 	self.options = options
 	self.token = ''
 	self.email = ''
+	self.user = {}
 
-	self.headers = {
-		authorization = self.token
-	}
+	self.headers = {}
+	
+	self.headers['authorization'] = self.token
+	self.headers['Content-Type'] = 'application/json'
 
 end
 
@@ -53,20 +55,21 @@ function Client:login(email, password)
 		password = password
 	}
 
-	local response = request.send(endpoints.login, 'POST', payload)
+	local response = request.send(endpoints.login, 'POST', payload, self.headers)
+	local success = util.responseIsSuccessful(response)
 
-	if utils.responseIsSuccessful(response) then
+	if success then
 
 		self.token = json.decode(response.body).token
 		self.isLoggedIn = true
-		self.headers.authorization = self.token
+		self.headers['authorization'] = self.token
 		self.email = email
 
-		return true
+		self.user = self:getCurrentUser()
 
-	else
-		return false
 	end
+
+	return success
 
 end
 
@@ -79,16 +82,13 @@ function Client:logout()
 		}
 
 		local response = request.send(endpoints.login, 'POST', payload)
+		local success = util.responseIsSuccessful(response)
 
-		if utils.responseIsSuccessful(response) then
-
+		if success then
 			self.isLoggedIn = false
-
-			return true
-
-		else
-			return false
 		end
+
+		return success
 
 	else
 		return false
@@ -98,12 +98,92 @@ end
 
 function Client:getGateway()
 
-	local response = request.send(endpoints.gateway, 'GET', nil, self.headers)
+	if self.isLoggedIn then
 
-	if utils.responseIsSuccessful(response) then
-		return json.decode(response.body).url
+		local response = request.send(endpoints.gateway, 'GET', nil, self.headers)
+
+		if util.responseIsSuccessful(response) then
+			return json.decode(response.body).url
+		else
+			return nil
+		end
+
+	end
+
+end
+
+function Client:getCurrentUser()
+
+	if self.isLoggedIn then
+
+		local response = request.send(endpoints.users .. '/@me', 'GET', nil, self.headers)
+
+		if util.responseIsSuccessful(response) then
+			return json.decode(response.body)
+		else
+			return nil
+		end
+
 	else
 		return nil
+	end
+
+end
+
+function Client:getServerList()
+
+	if self.isLoggedIn then
+
+		local response = request.send(endpoints.users .. '/' .. self.user.id .. '/guilds', 'GET', nil, self.headers)
+
+		if util.responseIsSuccessful(response) then
+			self.user = json.decode(response.body)
+			return json.decode(response.body)
+		else
+			return nil
+		end
+
+	else
+		return nil
+	end
+
+end
+
+function Client:getChannelList(id)
+
+	if self.isLoggedIn then
+
+		local response = request.send(endpoints.servers .. '/' .. id .. '/channels', 'GET', nil, self.headers)
+
+		if util.responseIsSuccessful(response) then
+			return json.decode(response.body)
+		else
+			return nil
+		end
+
+	else
+		return nil
+	end
+
+end
+
+
+function Client:sendMessage(message, id)
+
+	if self.isLoggedIn then
+
+		local payload = {
+			content = tostring(message)
+		}
+
+		print(json.encode(payload))
+
+		local response = request.send(endpoints.channels .. '/' .. id .. '/messages', 'POST', payload, self.headers)
+
+		return util.responseIsSuccessful(response)
+
+	else
+		return false
 	end
 
 end

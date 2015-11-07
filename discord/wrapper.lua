@@ -21,17 +21,21 @@
 -- THE SOFTWARE.
 
 local path = (...):match('(.-)[^%.]+$') .. '.'
+
 local request = require(path .. 'luajit-request.init')
+local json = require(path .. 'json')
 
 local requestWrapper = {}
 
 function requestWrapper.send(endpoint, method, data, headers)
 
-	return request.send(endpoint, {
-		headers = headers,
-		method = method,
-		data = data
-	})
+	local payload = {}
+
+	if headers then payload['headers'] = headers
+	if method then payload['method'] = method
+	if data then payload['data'] = json.encode(data) end
+
+	return request.send(endpoint, payload)
 
 end
 
