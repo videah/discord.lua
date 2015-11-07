@@ -42,7 +42,7 @@ function Client:initialize(options)
 	self.user = {}
 
 	self.headers = {}
-	
+
 	self.headers['authorization'] = self.token
 	self.headers['Content-Type'] = 'application/json'
 
@@ -172,11 +172,7 @@ function Client:sendMessage(message, id)
 
 	if self.isLoggedIn then
 
-		local payload = {
-			content = tostring(message)
-		}
-
-		print(json.encode(payload))
+		local payload = { content = tostring(message) }
 
 		local response = request.send(endpoints.channels .. '/' .. id .. '/messages', 'POST', payload, self.headers)
 
