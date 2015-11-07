@@ -13,6 +13,7 @@ discord = require 'discord.init'
 
 myClient = discord.Client:new()
 
+-- For the love of god, don't store the password in a GitHub repo.
 if myClient:login('email', 'password') then
 
 	print('Logged in!')
