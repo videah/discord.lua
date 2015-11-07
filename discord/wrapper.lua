@@ -31,8 +31,8 @@ function requestWrapper.send(endpoint, method, data, headers)
 
 	local payload = {}
 
-	if headers then payload['headers'] = headers
-	if method then payload['method'] = method
+	if headers then payload['headers'] = headers end
+	if method then payload['method'] = method end
 	if data then payload['data'] = json.encode(data) end
 
 	return request.send(endpoint, payload)

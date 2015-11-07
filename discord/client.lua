@@ -22,6 +22,8 @@
 
 local path = (...):match('(.-)[^%.]+$') .. '.'
 
+local ev = require 'ev'
+
 local request = require(path .. 'wrapper')
 
 local class = require(path .. 'class')
@@ -45,6 +47,10 @@ function Client:initialize(options)
 
 	self.headers['authorization'] = self.token
 	self.headers['Content-Type'] = 'application/json'
+
+	self.callbacks = {}
+
+	self.socket = require('websocket.client').ev()
 
 end
 
@@ -180,6 +186,20 @@ function Client:sendMessage(message, id)
 
 	else
 		return false
+	end
+
+end
+
+function Client:run()
+
+	if self.isLoggedIn then
+
+		while true do
+			
+			if self.callbacks.think then self.callbacks.think() end
+
+		end
+
 	end
 
 end
