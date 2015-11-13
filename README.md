@@ -48,4 +48,3 @@ Come back later after I fix it, and make sure you're always on the latest versio
  
 # Dependencies
  * [libcurl](http://curl.haxx.se/download.html)
- * [lua-websockets](https://github.com/lipp/lua-websockets)
