@@ -20,7 +20,7 @@
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 -- THE SOFTWARE.
 
-local path = (...):match('(.-)[^%.]+$') .. '.'
+local path = (...):match('(.-)[^%.]+$')
 
 local request = require(path .. 'luajit-request.init')
 local json = require(path .. 'json')

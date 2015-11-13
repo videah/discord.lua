@@ -22,14 +22,60 @@
 
 local path = (...):match('(.-)[^%.]+$')
 
-local discord = {
-	
-	_VERSION = '0.0.1',
-	_DESCRIPTION = 'Lua API Wrapper for Discord'
+local request = require(path .. 'wrapper')
 
-}
+local class = require(path .. 'class')
+local json = require(path .. 'json')
+local endpoints = require(path .. 'endpoints')
+local util = require(path .. 'utils')
 
-discord.Client = require(path .. 'client')
-discord.Message = require(path .. 'message')
+local Message = class('MessageObject')
 
-return discord
+function Message:initialize(packet, token)
+
+	self.packet = packet or {}
+	self.token = token or ''
+
+	self.headers = {}
+	self.headers['authorization'] = self.token
+	self.headers['Content-Type'] = 'application/json'
+
+end
+
+function Message:send()
+
+	local payload = {
+		content = self.packet.content or ''
+	}
+
+end
+
+function Message:edit(msg)
+
+	local payload = {
+		content = tostring(msg)
+	}
+
+	local response = request.send(endpoints.channels .. '/' .. self.packet.channel_id .. '/messages/' .. self.packet.id, 'PATCH', payload, self.headers)
+
+	if util.responseIsSuccessful(response) then
+		self.packet = json.decode(response.body)
+	end
+
+	return util.responseIsSuccessful(response)
+
+end
+
+function Message:delete()
+
+	local response = request.send(endpoints.channels .. '/' .. self.packet.channel_id .. '/messages/' .. self.packet.id, 'DELETE', nil, self.headers)
+
+	if util.responseIsSuccessful(response) then
+		self = nil
+	end
+
+	return util.responseIsSuccessful(response)
+
+end
+
+return Message

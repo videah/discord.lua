@@ -20,9 +20,7 @@
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 -- THE SOFTWARE.
 
-local path = (...):match('(.-)[^%.]+$') .. '.'
-
-local ev = require 'ev'
+local path = (...):match('(.-)[^%.]+$')
 
 local request = require(path .. 'wrapper')
 
@@ -30,6 +28,8 @@ local class = require(path .. 'class')
 local json = require(path .. 'json')
 local endpoints = require(path .. 'endpoints')
 local util = require(path .. 'utils')
+
+local Message = require(path .. 'message')
 
 print('Loaded client')
 
@@ -50,7 +50,7 @@ function Client:initialize(options)
 
 	self.callbacks = {}
 
-	self.socket = require('websocket.client').ev()
+	self.socket = nil
 
 end
 
@@ -98,6 +98,14 @@ function Client:logout()
 
 	else
 		return false
+	end
+
+end
+
+function Client:getToken()
+
+	if self.isLoggedIn then
+		return self.token
 	end
 
 end
@@ -178,14 +186,36 @@ function Client:sendMessage(message, id)
 
 	if self.isLoggedIn then
 
-		local payload = { content = tostring(message) }
+		local payload = {
+			content = tostring(message)
+		}
 
 		local response = request.send(endpoints.channels .. '/' .. id .. '/messages', 'POST', payload, self.headers)
 
-		return util.responseIsSuccessful(response)
+		return Message:new(json.decode(response.body), self.token)
 
 	else
-		return false
+		return nil
+	end
+
+end
+
+function Client:editMessage(message, msgClass)
+
+	if self.isLoggedIn then
+
+		msgClass:edit(message)
+
+	end
+
+end
+
+function Client:deleteMessage(msgClass)
+
+	if self.isLoggedIn then
+
+		msgClass:delete()
+
 	end
 
 end
