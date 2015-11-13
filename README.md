@@ -13,6 +13,7 @@ discord = require 'discord.init'
 
 myClient = discord.Client:new()
 
+-- For the love of god, don't store the password in a GitHub repo.
 if myClient:login('email', 'password') then
 
 	print('Logged in!')
@@ -20,7 +21,7 @@ if myClient:login('email', 'password') then
 	local serverList = myClient:getServerList()
 	print('First Server Name: ' .. serverList[1].name)
 
-	-- Server Name: Y[e]
+	-- First Server Name: Y[e]
 
 	local channelList = myClient:getChannelList(serverList[1].id)
 	print('First Channel Name: ' .. channelList[1].name)
@@ -48,3 +49,31 @@ Come back later after I fix it, and make sure you're always on the latest versio
  
 # Dependencies
  * [libcurl](http://curl.haxx.se/download.html)
+<<<<<<< HEAD
+=======
+ * [lua-websockets](https://github.com/lipp/lua-websockets)
+
+# License
+
+This code is licensed under the MIT Open Source License.
+
+Copyright (c) 2015 Ruairidh Carmichael - ruairidhcarmichael@live.co.uk
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+>>>>>>> 5b4b7da22362e5b7f300e3daef6526d10a6500ea
