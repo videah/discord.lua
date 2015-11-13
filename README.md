@@ -49,9 +49,6 @@ Come back later after I fix it, and make sure you're always on the latest versio
  
 # Dependencies
  * [libcurl](http://curl.haxx.se/download.html)
-<<<<<<< HEAD
-=======
- * [lua-websockets](https://github.com/lipp/lua-websockets)
 
 # License
 
@@ -76,4 +73,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
->>>>>>> 5b4b7da22362e5b7f300e3daef6526d10a6500ea
