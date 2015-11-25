@@ -6,7 +6,7 @@ LuaJIT API Wrapper for Discord
 
 Allows you to easily write bots and other things for [Discord](https://discordapp.com/) in LuaJIT.
 
-This is a Work in Progress, and is by no means finished/usable. There is currently no docs.
+This is a Work in Progress, and is by no means finished/usable. There is some documentation, but it's still not recommended to use this until it's in a more complete state.
 
 ```lua
 discord = require 'discord.init'
