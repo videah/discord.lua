@@ -20,6 +20,10 @@
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 -- THE SOFTWARE.
 
+-------------------------------------
+-- Discord Message Class
+-- @module Message
+
 local path = (...):match('(.-)[^%.]+$')
 
 local request = require(path .. 'wrapper')
@@ -31,6 +35,10 @@ local util = require(path .. 'utils')
 
 local Message = class('MessageObject')
 
+--- Internally initialize's the Message class.
+--- Please use Message:new(packet, token) instead.
+-- @param packet Packet to be sent as the message.
+-- @param token Authentication token from login.
 function Message:initialize(packet, token)
 
 	self.packet = packet or {}
@@ -42,14 +50,9 @@ function Message:initialize(packet, token)
 
 end
 
-function Message:send()
-
-	local payload = {
-		content = self.packet.content or ''
-	}
-
-end
-
+--- Edits a sent message.
+-- @param msg The new message to replace the old one.
+-- @return Response Packet received from Discord
 function Message:edit(msg)
 
 	local payload = {
@@ -66,6 +69,8 @@ function Message:edit(msg)
 
 end
 
+--- Deletes a sent message.
+-- @return Response Packet received from Discord
 function Message:delete()
 
 	local response = request.send(endpoints.channels .. '/' .. self.packet.channel_id .. '/messages/' .. self.packet.id, 'DELETE', nil, self.headers)

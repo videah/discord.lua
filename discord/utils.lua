@@ -20,8 +20,15 @@
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 -- THE SOFTWARE.
 
+-------------------------------------
+-- Various Internal Utilitys
+-- @module Utils
+
 local utils = {}
 
+--- Returns true if the response was successful.
+-- @param response Response from Discord server.
+-- @return True or False depending on response
 function utils.responseIsSuccessful(response)
 	return tonumber(response.code) >= 200 and tonumber(response.code) < 300
 end

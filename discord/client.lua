@@ -20,6 +20,10 @@
 -- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 -- THE SOFTWARE.
 
+-------------------------------------
+-- Discord Client Class
+-- @module Client
+
 local path = (...):match('(.-)[^%.]+$')
 
 local request = require(path .. 'wrapper')
@@ -35,6 +39,9 @@ print('Loaded client')
 
 local Client = class('ClientObject')
 
+--- Internally initialize's the Client class.
+--- Please use Client:new(options) instead.
+-- @param options Options table (Currently useless.)
 function Client:initialize(options)
 
 	self.isLoggedIn = false
@@ -54,6 +61,12 @@ function Client:initialize(options)
 
 end
 
+--- Logs the Client into Discord's servers.
+--- This is required to use most of the Clients functions.
+-- @param email E-mail Address of the account to log in.
+-- @param password Password of the account to log in.
+-- (WARNING: Do NOT store this password in a GitHub repo or anything of the sorts.)
+-- @return True or False depending on success.
 function Client:login(email, password)
 
 	local payload = {
@@ -79,6 +92,12 @@ function Client:login(email, password)
 
 end
 
+--- Logs the Client out of the Discord server.
+--- (This is currently useless/does nothing)
+-- @param email E-mail Address of the account to log in.
+-- @param password Password of the account to log in.
+-- (WARNING: Do NOT store this password in a GitHub repo or anything of the sorts.)
+-- @return True or False depending on success.
 function Client:logout()
 
 	if self.isLoggedIn then
@@ -92,6 +111,7 @@ function Client:logout()
 
 		if success then
 			self.isLoggedIn = false
+			self.token = nil
 		end
 
 		return success
@@ -102,14 +122,22 @@ function Client:logout()
 
 end
 
+--- Gets the current authentication token.
+--- (Only if logged in of course.)
+-- @return Authentication Token
 function Client:getToken()
 
 	if self.isLoggedIn then
 		return self.token
+	else
+		return nil
 	end
 
 end
 
+--- Gets the current Gateway we are connected to.
+--- (Only if logged in of course.)
+-- @return Gateway URL
 function Client:getGateway()
 
 	if self.isLoggedIn then
@@ -126,6 +154,9 @@ function Client:getGateway()
 
 end
 
+--- Gets the current User information.
+--- (Only if logged in of course.)
+-- @return User Table
 function Client:getCurrentUser()
 
 	if self.isLoggedIn then
@@ -144,6 +175,9 @@ function Client:getCurrentUser()
 
 end
 
+--- Gets a table of Servers the current User is connected to.
+--- (Only if logged in of course.)
+-- @return Server Table
 function Client:getServerList()
 
 	if self.isLoggedIn then
@@ -163,6 +197,10 @@ function Client:getServerList()
 
 end
 
+--- Gets a table of Channels from the provided Server id.
+--- (Only if logged in of course.)
+-- @param id Server ID
+-- @return Channel Table
 function Client:getChannelList(id)
 
 	if self.isLoggedIn then
@@ -181,7 +219,11 @@ function Client:getChannelList(id)
 
 end
 
-
+--- Sends a Message from the Client to a Channel.
+--- (Only if logged in of course.)
+-- @param message Message to be sent.
+-- @param id ID for Channel to send to.
+-- @return Message Class
 function Client:sendMessage(message, id)
 
 	if self.isLoggedIn then
@@ -200,6 +242,11 @@ function Client:sendMessage(message, id)
 
 end
 
+--- Edits a sent Message.
+--- (Only if logged in of course.)
+-- @param message The new message to replace the old one.
+-- @param msgClass Message Class to edit.
+-- @return Message Class
 function Client:editMessage(message, msgClass)
 
 	if self.isLoggedIn then
@@ -210,6 +257,10 @@ function Client:editMessage(message, msgClass)
 
 end
 
+--- Deletes a sent Message.
+--- (Only if logged in of course.)
+-- @param msgClass Message Class to delete.
+-- @return Message Class
 function Client:deleteMessage(msgClass)
 
 	if self.isLoggedIn then
@@ -220,6 +271,8 @@ function Client:deleteMessage(msgClass)
 
 end
 
+--- Starts the Client loop.
+--- (Does nothing of real use at the moment, will interact with WebSockets in the future)
 function Client:run()
 
 	if self.isLoggedIn then

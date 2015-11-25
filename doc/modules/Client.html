@@ -1,0 +1,411 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>discord.lua Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>discord.lua</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>Client</strong></li>
+  <li><a href="../modules/Message.html">Message</a></li>
+  <li><a href="../modules/Utils.html">Utils</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Client</code></h1>
+<p>Discord Client Class</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#initialize">initialize (options)</a></td>
+	<td class="summary">Internally initialize's the Client class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#login">login (email, password)</a></td>
+	<td class="summary">Logs the Client into Discord's servers.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#logout">logout (email, password)</a></td>
+	<td class="summary">Logs the Client out of the Discord server.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getToken">getToken ()</a></td>
+	<td class="summary">Gets the current authentication token.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getGateway">getGateway ()</a></td>
+	<td class="summary">Gets the current Gateway we are connected to.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getCurrentUser">getCurrentUser ()</a></td>
+	<td class="summary">Gets the current User information.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getServerList">getServerList ()</a></td>
+	<td class="summary">Gets a table of Servers the current User is connected to.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getChannelList">getChannelList (id)</a></td>
+	<td class="summary">Gets a table of Channels from the provided Server id.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sendMessage">sendMessage (message, id)</a></td>
+	<td class="summary">Sends a Message from the Client to a Channel.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#editMessage">editMessage (message, msgClass)</a></td>
+	<td class="summary">Edits a sent Message.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#deleteMessage">deleteMessage (msgClass)</a></td>
+	<td class="summary">Deletes a sent Message.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#run">run ()</a></td>
+	<td class="summary">Starts the Client loop.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "initialize"></a>
+    <strong>initialize (options)</strong>
+    </dt>
+    <dd>
+    Internally initialize's the Client class.
+ Please use Client:new(options) instead.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">options</span>
+         Options table (Currently useless.)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "login"></a>
+    <strong>login (email, password)</strong>
+    </dt>
+    <dd>
+    Logs the Client into Discord's servers.
+ This is required to use most of the Clients functions.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">email</span>
+         E-mail Address of the account to log in.
+        </li>
+        <li><span class="parameter">password</span>
+         Password of the account to log in.
+ (WARNING: Do NOT store this password in a GitHub repo or anything of the sorts.)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        True or False depending on success.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "logout"></a>
+    <strong>logout (email, password)</strong>
+    </dt>
+    <dd>
+    Logs the Client out of the Discord server.
+ (This is currently useless/does nothing)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">email</span>
+         E-mail Address of the account to log in.
+        </li>
+        <li><span class="parameter">password</span>
+         Password of the account to log in.
+ (WARNING: Do NOT store this password in a GitHub repo or anything of the sorts.)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        True or False depending on success.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getToken"></a>
+    <strong>getToken ()</strong>
+    </dt>
+    <dd>
+    Gets the current authentication token.
+ (Only if logged in of course.)
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Authentication Token
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getGateway"></a>
+    <strong>getGateway ()</strong>
+    </dt>
+    <dd>
+    Gets the current Gateway we are connected to.
+ (Only if logged in of course.)
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Gateway URL
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getCurrentUser"></a>
+    <strong>getCurrentUser ()</strong>
+    </dt>
+    <dd>
+    Gets the current User information.
+ (Only if logged in of course.)
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        User Table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getServerList"></a>
+    <strong>getServerList ()</strong>
+    </dt>
+    <dd>
+    Gets a table of Servers the current User is connected to.
+ (Only if logged in of course.)
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Server Table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getChannelList"></a>
+    <strong>getChannelList (id)</strong>
+    </dt>
+    <dd>
+    Gets a table of Channels from the provided Server id.
+ (Only if logged in of course.)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id</span>
+         Server ID
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Channel Table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sendMessage"></a>
+    <strong>sendMessage (message, id)</strong>
+    </dt>
+    <dd>
+    Sends a Message from the Client to a Channel.
+ (Only if logged in of course.)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+         Message to be sent.
+        </li>
+        <li><span class="parameter">id</span>
+         ID for Channel to send to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Message Class
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "editMessage"></a>
+    <strong>editMessage (message, msgClass)</strong>
+    </dt>
+    <dd>
+    Edits a sent Message.
+ (Only if logged in of course.)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+         The new message to replace the old one.
+        </li>
+        <li><span class="parameter">msgClass</span>
+         Message Class to edit.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Message Class
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "deleteMessage"></a>
+    <strong>deleteMessage (msgClass)</strong>
+    </dt>
+    <dd>
+    Deletes a sent Message.
+ (Only if logged in of course.)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">msgClass</span>
+         Message Class to delete.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Message Class
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "run"></a>
+    <strong>run ()</strong>
+    </dt>
+    <dd>
+    Starts the Client loop.
+ (Does nothing of real use at the moment, will interact with WebSockets in the future)
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-11-25 22:47:19 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
