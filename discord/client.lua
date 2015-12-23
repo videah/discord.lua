@@ -88,7 +88,17 @@ function Client:login(email, password)
 
 	end
 
-	return success
+	return self.token
+
+end
+
+function Client:loginWithToken(token)
+
+	self.token = token
+	self.isLoggedIn = true
+	self.headers['authorization'] = self.token
+
+	self.user = self:getCurrentUser()
 
 end
 
@@ -182,7 +192,7 @@ function Client:getServerList()
 
 	if self.isLoggedIn then
 
-		local response = request.send(endpoints.users .. '/' .. self.user.id .. '/guilds', 'GET', nil, self.headers)
+		local response = request.send(endpoints.users .. '/@me/guilds', 'GET', nil, self.headers)
 
 		if util.responseIsSuccessful(response) then
 			self.user = json.decode(response.body)
