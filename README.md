@@ -4,7 +4,7 @@
 
 LuaJIT API Wrapper for Discord
 
-*Note: I'm busy with college and other stuff, but will eventually work on this when I have time. Mention me on the DiscordAPI server if you have any questions.
+*Note: I'm busy with college and other stuff, but will eventually work on this when I have time. Mention me on the DiscordAPI server if you have any questions.*
 
 Allows you to easily write bots and other things for [Discord](https://discordapp.com/) in LuaJIT.
 
