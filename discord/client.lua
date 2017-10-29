@@ -96,10 +96,11 @@ function Client:loginWithToken(token)
 
 	self.token = token
 	self.isLoggedIn = true
-	self.headers['authorization'] = self.token
+	self.headers['authorization'] = "Bot "..token
 
 	self.user = self:getCurrentUser()
 
+	return token
 end
 
 --- Logs the Client out of the Discord server.
@@ -172,7 +173,6 @@ function Client:getCurrentUser()
 	if self.isLoggedIn then
 
 		local response = request.send(endpoints.users .. '/@me', 'GET', nil, self.headers)
-
 		if util.responseIsSuccessful(response) then
 			return json.decode(response.body)
 		else
@@ -288,7 +288,6 @@ function Client:run()
 	if self.isLoggedIn then
 
 		while true do
-			
 			if self.callbacks.think then self.callbacks.think() end
 
 		end
